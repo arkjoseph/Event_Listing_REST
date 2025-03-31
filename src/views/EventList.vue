@@ -12,7 +12,7 @@ const router = useRouter()
 // @Computed
 const hasNextPage = computed(() => {
   // Calculate total pages based on the amount per page
-  const totalPages = Math.ceil(totalEvents.value / 2)
+  const totalPages = Math.ceil(totalEvents.value / 4)
 
   // If page is less than total pages return true
   return page.value < totalPages
@@ -20,7 +20,7 @@ const hasNextPage = computed(() => {
 const fetchEvents = () => {
   watchEffect(() => {
     events.value = null
-    EventService.getEvents(2, props.page)
+    EventService.getEvents(4, props.page)
       .then((response) => {
         events.value = response.data
         // We are expecting the header
@@ -60,12 +60,9 @@ h1 {
 }
 
 .events {
-  background: #eaeaea;
   width: 340px;
   margin: 0 auto;
   padding: 6px;
-  border: 1px solid #c7c7c7;
-
   display: flex;
   flex-direction: column;
   align-items: center;
