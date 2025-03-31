@@ -76,12 +76,27 @@ const router = createRouter({
       component: NetworkError
     }
   ],
+
   scrollBehavior(to, from, savedPosition) {
-    if (savedPosition) { // <----
-      return savedPosition
-    } else {
-      return { top: 0 }
+  /*
+   * Timeout when hitting back browser button
+   */
+    // If using browser back/forward buttons
+    if (savedPosition) {
+      return new Promise((resolve, reject) => {
+        if (resolve){
+          // Small delay to ensure DOM updates
+          setTimeout(() => {
+            resolve(savedPosition)
+          }, 150)
+        } else {
+          reject(savedPosition)
+        }
+      })
     }
+
+    // For all other routes, scroll to top
+    //return { top: 0 }
   }
 })
 

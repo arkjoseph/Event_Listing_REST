@@ -6,6 +6,10 @@ This app is written in vue.js and illustrates key learned skills utilizing ...
 * Vue router ( composition api )
   * Lazy Loading routes
   * Scroll behavior
+  * Pagination
+  * Error handling
+  * Flash message
+  * Progress bar
 * Vue router ( options api )
 * Nested routes
 

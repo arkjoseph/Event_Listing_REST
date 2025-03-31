@@ -1,8 +1,8 @@
 <script setup>
+import { useRouter } from 'vue-router'
 import { ref, onMounted, computed, watchEffect } from 'vue'
 import EventCard from '@/components/EventCard.vue'
 import EventService from '@/services/service.js'
-import { useRouter } from 'vue-router'
 
 const props = defineProps(['page'])
 const events = ref(null)
@@ -46,6 +46,7 @@ onMounted(() => {
         <router-link id="page-prev" v-if="page != 1" :to="{ name: 'event-list', query: { page: page - 1 } }"
           >Prev Page
         </router-link>
+        {{ page }}
         <router-link id="page-next" v-if="hasNextPage" :to="{ name: 'event-list', query: { page: page + 1 } }"
           >Next Page
         </router-link>
