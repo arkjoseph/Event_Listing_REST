@@ -1,10 +1,14 @@
 <script setup>
+import { inject } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
 //import HelloWorld from './components/EventCard.vue'
+
+const GStore = inject('GStore') // Flash message
 </script>
 
 <template>
   <header>
+  <div id="notice alert" v-if="GStore.flashMessage">{{ GStore.flashMessage }}</div>
     <div id="layout">
       <div class="wrapper">
         <nav>
