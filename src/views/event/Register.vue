@@ -21,6 +21,24 @@ const register = () => {
 </script>
 
 <template>
-  <p>Register for Event</p>
-  <button @click="register">Register Me</button>
+  <div class="events">
+    <div class="event-card register-event">
+      <p>Register for Event</p>
+      <button class="button" @click="register">Register Me</button>
+    </div>
+  </div>
 </template>
+
+<style scoped>
+.button {
+  width: 100%;
+  background: #ffdf8f;
+  border: 3px solid white;
+  padding: 10px;
+  cursor: pointer;
+  &:focus {
+    border: 3px solid #817362;
+
+  }
+}
+</style>

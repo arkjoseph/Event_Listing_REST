@@ -12,8 +12,10 @@ const GStore = inject('GStore') // Flash message
     <div id="layout">
       <div class="wrapper">
         <nav>
-          <RouterLink :to="{ name: 'event-list' }">Home</RouterLink> *
-          <RouterLink :to="{ name: 'about' }">About</RouterLink>
+          <ul>
+            <li><RouterLink :to="{ name: 'event-list' }">Home</RouterLink></li>
+            <li><RouterLink :to="{ name: 'about' }">About</RouterLink></li>
+          </ul>
         </nav>
       </div>
     </div>
@@ -22,10 +24,13 @@ const GStore = inject('GStore') // Flash message
 </template>
 
 <style>
-#layout {
+body {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+#layout,
+h2 {
   text-align: center;
   color: #2c3e50;
 }
@@ -33,7 +38,15 @@ h2 {
   font-size: 20px;
 }
 nav {
-  padding: 30px;
+  padding: 30px 0;
+  ul {
+    padding: 0;
+    list-style: none;
+    li {
+      display: inline-grid;
+      margin: 0 20px 0 0;
+    }
+  }
 }
 nav a {
   font-weight: bold;

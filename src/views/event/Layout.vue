@@ -32,12 +32,28 @@ onMounted(() => {
   <div v-if="event">
     <h1>{{ event.title }}</h1>
 
-    <ul id="nav">
-      <li><router-link :to="{ name: 'event-details'} ">Details</router-link></li>
-      <li><router-link :to="{ name: 'event-register'} ">Register</router-link></li>
-      <li><router-link :to="{ name: 'event-edit'} ">Edit</router-link></li>
-    </ul>
+    <nav>
+      <ul id="sub-nav">
+        <li><router-link :to="{ name: 'event-details'} ">Details</router-link></li>
+        <li><router-link :to="{ name: 'event-register'} ">Register</router-link></li>
+        <li><router-link :to="{ name: 'event-edit'} ">Edit</router-link></li>
+      </ul>
+    </nav>
 
     <router-view :event="event" />
   </div>
 </template>
+
+<style>
+h1,#sub-nav {
+  text-align: center;
+}
+#sub-nav li a {
+  border: 1px solid gainsboro;
+  padding: 7px;
+  &:hover {
+    background: #2c3e50;
+    color: white;
+  }
+}
+</style>

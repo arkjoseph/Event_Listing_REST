@@ -3,5 +3,9 @@ defineProps(['event'])
 </script>
 
 <template>
-  <p>Edit Event</p>
+  <div class="events">
+    <div class="event-card edit-event">
+      <p>Edit Event</p>
+    </div>
+  </div>
 </template>

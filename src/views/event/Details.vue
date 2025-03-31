@@ -3,8 +3,12 @@ defineProps(['event'])
 </script>
 
 <template>
-  <div>
-    <p>{{ event.time }} on {{ event.date }} @ {{ event.location }}</p>
-    <p>{{ event.location }}</p>
+  <div class="events">
+    <div class="event-card">
+      <p>{{ event.time }} on {{ event.date }} @ {{ event.location }}</p>
+    </div>
   </div>
 </template>
+
+<style scoped>
+</style>
