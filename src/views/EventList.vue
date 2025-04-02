@@ -25,9 +25,28 @@ const hasNextPage = computed(() => {
 onMounted(() => {
   watchEffect(() => {
     events.value = null
-    EventService.getEvents(3, props.page)
+    EventService.getEvents(10, props.page)
       .then((response) => {
         console.log('API Response:', response.data)
+
+
+        let eventsData = []
+
+        if (response.data && response.data.data) {
+          eventsData = response.data.data
+        } else {
+          eventsData = response.data
+        }
+
+        // Sort by timestamp if available (newest first)
+        eventsData = [...eventsData].sort((a, b) => {
+          if (a.createdAt && b.createdAt) {
+            return new Date(b.createdAt) - new Date(a.createdAt)
+          }
+          return 0 // Don't change order if no timestamps
+        })
+
+        events.value = eventsData
 
         events.value = response.data
 

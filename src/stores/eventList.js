@@ -30,7 +30,11 @@ export const useEventListStore = defineStore('events', {
     // API Actions
     async createEvent(eventData) {
       try {
-        const newEvent = { ...eventData, completed: false }
+        const newEvent = {
+          ...eventData,
+          completed: false,
+          createdAt: new Date().toISOString()
+        }
 
         const response = await EventService.createEvent(newEvent)
 

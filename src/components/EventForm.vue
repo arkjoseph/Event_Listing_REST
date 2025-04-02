@@ -2,25 +2,19 @@
 import { ref } from 'vue'
 import { useEventListStore } from '@/stores/eventList.js'
 
-const event = ref('')
+// Field values
 const title = ref('')
-const id = ref("0")
 // Pinia
 const store = useEventListStore()
 
-function addItemAndClear(item) {
-  if (item.length === 0) {
+// Submit form
+const submitForm = async () => {
+  if (!title.value || title.value.trim().length === 0) {
     return
   }
-  // invokes function in the store:
-  //store.addEvent(item)
-  event.value = ''
-}
-const submitForm = async () => {
-  addItemAndClear(event)
   try {
-    await store.createEvent( {  title: title.value, id: id.value } )
-   // console.log(this.event)
+    await store.createEvent( {  title: title.value } )
+    title.value = ''
   } catch (error) {
     console.error('Failed to submit:', error);
   }
@@ -29,7 +23,7 @@ const submitForm = async () => {
 
 <template>
   <form @submit.prevent="submitForm">
-    <input placeholder="Event Title" v-model="event" type="text" />
+    <input placeholder="Event Title" v-model="title" type="text" />
     <button>Add</button>
   </form>
 </template>

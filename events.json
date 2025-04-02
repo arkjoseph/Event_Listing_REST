@@ -1,159 +1,22 @@
 {
   "events": [
     {
-      "id": "123",
-      "category": "animal welfare",
-      "title": "Teddy Bear Adoption Day",
-      "description": "Find your new feline friend at this event.",
-      "location": "Meow Town",
-      "date": "January 28, 2022",
-      "time": "11:00",
-      "organizer": "Kat Laydee"
+      "id": "0ce9",
+      "title": "six",
+      "completed": false,
+      "createdAt": "2025-04-02T19:48:38.233Z"
     },
     {
-      "id": "456",
-      "category": "food",
-      "title": "123 Community Gardening",
-      "description": "Join us as we tend to the community edible plants.",
-      "location": "Flora City",
-      "date": "March 14, 2022",
-      "time": "10:00",
-      "organizer": "Fern Pollin"
+      "id": "6400",
+      "title": "five",
+      "completed": false,
+      "createdAt": "2025-04-02T19:48:39.357Z"
     },
     {
-      "id": "789",
-      "category": "sustainability",
-      "title": "Beach Cleanup",
-      "description": "Help pick up trash along the shore.",
-      "location": "Playa Del Carmen",
-      "date": "July 22, 2022",
-      "time": "11:00",
-      "organizer": "Carey Wales"
-    },
-    {
-      "id": "457",
-      "category": "food",
-      "title": "1 Community Gardening",
-      "description": "Join us as we tend to the community edible plants.",
-      "location": "Flora City",
-      "date": "March 14, 2022",
-      "time": "10:00",
-      "organizer": "Fern Pollin"
-    },
-    {
-      "id": "799",
-      "category": "sustainability",
-      "title": "2 Beach Cleanup",
-      "description": "Help pick up trash along the shore.",
-      "location": "Playa Del Carmen",
-      "date": "July 22, 2022",
-      "time": "11:00",
-      "organizer": "Carey Wales"
-    },
-    {
-      "id": "4599",
-      "category": "sustainability",
-      "title": "Parking lot cleanup",
-      "description": "Help pick up trash along the shore.",
-      "location": "Playa Del Carmen",
-      "date": "July 22, 2022",
-      "time": "11:00",
-      "organizer": "Carey Wales"
-    },
-    {
-      "id": "902309",
-      "category": "animal welfare",
-      "title": "Cat Adoption day",
-      "description": "Find your new feline friend at this event.",
-      "location": "Meow Town",
-      "date": "January 28, 2022",
-      "time": "12:00",
-      "organizer": "Kat Laydee"
-    },
-    {
-      "id": "45",
-      "category": "food",
-      "title": "Electronic recycling",
-      "description": "Join us as we tend to the community edible plants.",
-      "location": "Flora City",
-      "date": "March 14, 2022",
-      "time": "10:00",
-      "organizer": "Fern Pollin"
-    },
-    {
-      "id": "1723",
-      "category": "sustainability",
-      "title": "Summer Beach Cleanup",
-      "description": "Help pick up trash along the shore.",
-      "location": "Playa Del Carmen",
-      "date": "July 22, 2022",
-      "time": "11:00",
-      "organizer": "Carey Wales"
-    },
-    {
-      "id": "4575767",
-      "category": "food",
-      "title": "Winter Community Gardening",
-      "description": "Join us as we tend to the community edible plants.",
-      "location": "Flora City",
-      "date": "March 14, 2022",
-      "time": "10:00",
-      "organizer": "Fern Pollin"
-    },
-    {
-      "id": "797739",
-      "category": "sustainability",
-      "title": "Spring Beach Cleanup",
-      "description": "Help pick up trash along the shore.",
-      "location": "Playa Del Carmen",
-      "date": "July 22, 2022",
-      "time": "11:00",
-      "organizer": "Carey Wales"
-    },
-    {
-      "id": "24599",
-      "category": "sustainability",
-      "title": "Fall Beach Cleanup",
-      "description": "Help pick up trash along the shore.",
-      "location": "Playa Del Carmen",
-      "date": "July 22, 2022",
-      "time": "11:00",
-      "organizer": "Carey Wales"
-    },
-    {
-      "id": "01",
-      "title": "",
-      "completed": false
-    },
-    {
-      "id": "0",
-      "title": "",
-      "completed": false
-    },
-    {
-      "id": "0",
-      "title": "",
-      "completed": false
-    },
-    {
-      "id": "0",
-      "title": "",
-      "completed": false
-    },
-    {
-      "id": "0",
-      "title": "",
-      "completed": false
-    },
-    {
-      "id": "0",
-      "title": "",
-      "completed": false
-    },
-    {
-      "id": "0",
-      "title": "",
-      "completed": false
+      "id": "b564",
+      "title": "four",
+      "completed": false,
+      "createdAt": "2025-04-02T19:48:41.353Z"
     }
   ]
 }
