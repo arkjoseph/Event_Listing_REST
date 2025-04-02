@@ -1,5 +1,6 @@
 <script setup>
-//import { ref } from 'vue'
+import { storeToRefs } from "pinia"
+import { useEventListStore } from '@/stores/eventList.js'
 
 import { RouterLink } from 'vue-router'
 
@@ -9,16 +10,28 @@ defineProps({
     required: true,
   },
 })
+
+// StoreToRefs for reactivity
+const store = useEventListStore();
+const { events } = storeToRefs(store)
+
+// destructure action
+const { toggleCompleted, deleteEvent } = store
+
 </script>
 
 <template>
-  <RouterLink :to="{ name: 'event-details', params: { id: event.id } }">
-    <div class="event-card listings">
-      <h2>{{ event.title }}</h2>
+    <div class="event-card listings" :class="{ completed: event.completed }">
+      <h2>
+        <RouterLink :to="{ name: 'event-details', params: { id: event.id } }">
+          {{ event.title }}
+        </RouterLink>
+      </h2>
 
-      <span>@{{ event.time }} on {{ event.date }}</span>
+      <p>@{{ event.time }} on {{ event.date }}</p>
+      <span @click.stop="toggleCompleted(event.id)">&#10004;</span>
+      <span @click="deleteEvent(event.id)">&#10060;</span>
     </div>
-    </RouterLink>
 </template>
 
 <style>
@@ -29,10 +42,15 @@ defineProps({
   margin-bottom: 18px;
 }
 .event-card {
-  &.listings:hover {
-    cursor: pointer;
-    transform: scale(1.01);
+  &.listings h2:hover {
+    transform: scale(1.07);
   }
   box-shadow: 0 3px 12px 0 rgba(0, 0, 0, 0.2);
+  &.completed {
+    background: darkblue;
+    a,p {
+      color: white;
+    }
+  }
 }
 </style>
