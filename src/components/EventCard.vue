@@ -1,8 +1,6 @@
 <script setup>
-import { storeToRefs } from "pinia"
-import { useEventListStore } from '@/stores/eventList.js'
-
 import { RouterLink } from 'vue-router'
+import { useEventListStore } from '@/stores/eventList.js'
 
 defineProps({
   event: {
@@ -11,13 +9,9 @@ defineProps({
   },
 })
 
-// StoreToRefs for reactivity
+// // StoreToRefs for reactivity
 const store = useEventListStore();
-const { events } = storeToRefs(store)
-
-// destructure action
-const { toggleCompleted, deleteEvent } = store
-
+const { toggleCompleted, deleteEvent } = store;
 </script>
 
 <template>

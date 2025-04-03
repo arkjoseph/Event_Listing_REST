@@ -1,5 +1,7 @@
 import { defineStore } from 'pinia'
+import { useRouter } from 'vue-router'
 import EventService from '@/services/service.js'
+const router = useRouter()
 export const useEventListStore = defineStore('events', {
   // state
   state: () => ({
@@ -27,7 +29,32 @@ export const useEventListStore = defineStore('events', {
       })
     },
 
-    // API Actions
+    //////// API Actions /////////
+    // Fetch some data
+    async fetchEvents(perPage, page) {
+      this.loading = true
+      this.error = null
+
+      try {
+        const response = await EventService.getEvents(perPage, page)
+        // server provided responses for pagination
+        if (response.data && response.data.data) {
+          this.events = response.data.data
+          // totalEvents.value = response.data.items
+          // totalPages.value = response.data.pages
+          // nextPage.value = response.data.next
+        }
+        console.info("Returned Response: ", response)
+        return response;
+      } catch (error) {
+        await router.push({ name: 'network-error' })
+        console.error('Error fetching events:', error)
+        throw error
+      } finally {
+        this.loading = false
+      }
+    },
+    // Create some data
     async createEvent(eventData) {
       try {
         const newEvent = {

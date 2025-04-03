@@ -15,8 +15,8 @@ export default {
   },
   getEvents(perPage, page) {
     // Updated to use _per_page instead of _limit
-    return apiClient.get(`/events?_per_page=${perPage}&_page=${page}`)
-    //return apiClient.get(`/events?_sort=-id`)
+    return apiClient.get(`/events?_per_page=${perPage}&_page=${page}&_sort=-createdAt`)
+    //return apiClient.get(`/events?_sort=-createdAt`)
   },
   getEvent(id) {
     // ID for this call

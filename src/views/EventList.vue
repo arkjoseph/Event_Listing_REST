@@ -1,72 +1,46 @@
 <script setup>
 import { useRouter } from 'vue-router'
-import { ref, onMounted, computed, watchEffect } from 'vue'
-import { storeToRefs } from 'pinia'
+import { ref, computed, watchEffect } from 'vue'
+
 import { useEventListStore } from '@/stores/eventList.js'
 
 import EventCard from '@/components/EventCard.vue'
 import EventForm from '@/components/EventForm.vue'
 
-import EventService from '@/services/service.js'
 
 const props = defineProps(['page'])
-
 const page = computed(() => props.page)
-const totalEvents = ref(0)
-const totalPages = ref(0)
+
 const nextPage = ref(0)
 const router = useRouter()
+
+// StoreToRefs for reactivity
+const store = useEventListStore();
+
+// Local refs instead of storeToRefs(store)
+const events = ref([])
+const loading = ref(false)
+
 //@Computed
 const hasNextPage = computed(() => {
   // API Response
   return nextPage.value !== null
 })
-//LifeCycle hook
-onMounted(() => {
-  watchEffect(() => {
-    events.value = null
-    EventService.getEvents(10, props.page)
-      .then((response) => {
-        console.log('API Response:', response.data)
-
-
-        let eventsData = []
-
-        if (response.data && response.data.data) {
-          eventsData = response.data.data
-        } else {
-          eventsData = response.data
-        }
-
-        // Sort by timestamp if available (newest first)
-        eventsData = [...eventsData].sort((a, b) => {
-          if (a.createdAt && b.createdAt) {
-            return new Date(b.createdAt) - new Date(a.createdAt)
-          }
-          return 0 // Don't change order if no timestamps
-        })
-
-        events.value = eventsData
-
-        events.value = response.data
-
-        // server provided responses for pagination
-        if (response.data && response.data.data) {
-          events.value = response.data.data
-          totalEvents.value = response.data.items
-          totalPages.value = response.data.pages
-          nextPage.value = response.data.next
-        }
+// WatchEffect to run on component mount
+watchEffect(() => {
+  if (store && props.page) {
+    loading.value = true
+    store.fetchEvents(5, props.page)
+      .then(() => {
+        events.value = store.events
       })
-      .catch(() => {
-        router.push({ name: 'network-error' })
+      .catch((error) => {
+        console.error('Error fetching events:', error)
+        router.push(( { name: 'network-error' } ))
       })
-  })
+  }
 })
 
-// StoreToRefs for reactivity
-const store = useEventListStore()
-const { events } = storeToRefs(store)
 </script>
 
 <template>
@@ -76,8 +50,11 @@ const { events } = storeToRefs(store)
       <div class="event-form">
         <EventForm></EventForm>
       </div>
+      <div v-if="loading && !events.length" class="loading">Loading events...</div>
 
-      <EventCard v-for="event in events" :key="event.id" :event="event" />
+      <template v-if="events && events.length">
+        <EventCard v-for="event in events" :key="event.id" :event="event" />
+      </template>
 
       <div class="pagination">
         <router-link
