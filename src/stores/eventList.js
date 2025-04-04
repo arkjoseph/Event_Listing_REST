@@ -7,10 +7,15 @@ export const useEventListStore = defineStore('events', {
   state: () => ({
     events: [],
     id: 0,
+    loading: false,
+    error: null,
+    offset: 0,
+    limit: 10,
+    hasMoreEvents: true
   }),
 
-  // getters
   actions: {
+    // getters
     addEvent(title) {
       const newEvent = { title, id: this.id++, completed: false }
 
@@ -30,6 +35,50 @@ export const useEventListStore = defineStore('events', {
     },
 
     //////// API Actions /////////
+    async fetchMoreEvents() {
+      if (this.loading || !this.hasMoreEvents) return
+      this.loading = true
+
+      try {
+        const response = await EventService.getEvents(this.limit, this.offset)
+
+        let newEvents = []
+        // server provided responses for pagination
+        if (response.data && response.data.data) {
+          newEvents = response.data.data
+        } else {
+          newEvents = response.data
+        }
+        // Fewer items? the end is near
+        if (newEvents.length < this.limit) {
+          this.hasMoreEvents = false
+        }
+
+        // Add new events to the array
+        this.events = [...this.events, ...newEvents]
+
+        // Update offset for next fetch
+        this.offset += newEvents.length
+
+        console.info("Returned Response: ", response)
+        return newEvents;
+      } catch (error) {
+        await router.push({ name: 'network-error' })
+        console.error('Error fetching events:', error)
+        throw error
+      } finally {
+        this.loading = false
+      }
+    },
+
+    // Reset store state (useful when navigating away and back)
+    resetEvents() {
+      this.events = []
+      this.offset = 0
+      this.hasMoreEvents = true
+      this.error = null
+    },
+
     // Fetch some data
     async fetchEvents(perPage, page) {
       this.loading = true
@@ -68,6 +117,7 @@ export const useEventListStore = defineStore('events', {
         // Server Response
         this.events = [response.data, ...this.events]
         console.log('Created Event', newEvent)
+
         return response.data
       } catch (error) {
         console.log('Error creating event:', error)

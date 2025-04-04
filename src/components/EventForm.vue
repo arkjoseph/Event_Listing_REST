@@ -13,18 +13,31 @@ const submitForm = async () => {
     return
   }
   try {
-    await store.createEvent( {  title: title.value } )
+    await store.createEvent({ title: title.value })
     title.value = ''
   } catch (error) {
-    console.error('Failed to submit:', error);
+    console.error('Failed to submit:', error)
+  }
+}
+const clearForm = () => {
+  if (title.value) {
+    title.value = '';
   }
 }
 </script>
 
 <template>
   <form @submit.prevent="submitForm">
-    <input placeholder="Event Title" v-model="title" type="text" />
-    <button>Add</button>
+    <textarea placeholder="Take a note..." v-model="title" type="text" />
+    <button class="button">Add</button>
+    <a @click="clearForm" class="clear button">cancel</a>
   </form>
 </template>
-<style scoped></style>
+<style scoped>
+.button {
+  cursor: pointer;
+}
+.clear {
+  padding: 0 20px;
+}
+</style>

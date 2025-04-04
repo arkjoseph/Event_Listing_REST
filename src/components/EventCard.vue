@@ -1,5 +1,6 @@
 <script setup>
 import { RouterLink } from 'vue-router'
+// import { storeToRefs } from 'pinia'
 import { useEventListStore } from '@/stores/eventList.js'
 
 defineProps({
@@ -11,6 +12,7 @@ defineProps({
 
 // // StoreToRefs for reactivity
 const store = useEventListStore();
+// const { events } = storeToRefs(store)
 const { toggleCompleted, deleteEvent } = store;
 </script>
 
@@ -23,17 +25,26 @@ const { toggleCompleted, deleteEvent } = store;
       </h2>
 
       <p>@{{ event.time }} on {{ event.date }}</p>
-      <span @click.stop="toggleCompleted(event.id)">&#10004;</span>
-      <span @click="deleteEvent(event.id)">&#10060;</span>
+      <div class="card_buttons">
+        <span @click.stop="toggleCompleted(event.id)">&#10004;</span>
+        <span @click="deleteEvent(event.id)">&#10060;</span>
+      </div>
     </div>
 </template>
 
 <style>
 .event-card {
   padding: 20px;
-  width: 250px;
+  width: 100%; /* Change from fixed width to 100% */
   border: 1px solid #39495c;
-  margin-bottom: 18px;
+  height: 100%; /* Fill the height given by VirtualScroller */
+  box-sizing: border-box; /* Include padding in height calculation */
+  .card_buttons {
+
+  }
+  &.completed {
+    background: blueviolet;
+  }
 }
 .event-card {
   &.listings h2:hover {

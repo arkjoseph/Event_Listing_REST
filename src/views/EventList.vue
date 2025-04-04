@@ -1,45 +1,34 @@
 <script setup>
-import { useRouter } from 'vue-router'
-import { ref, computed, watchEffect } from 'vue'
+import { computed, onMounted, onActivated } from 'vue'
+import { storeToRefs } from 'pinia'
 
 import { useEventListStore } from '@/stores/eventList.js'
 
 import EventCard from '@/components/EventCard.vue'
 import EventForm from '@/components/EventForm.vue'
-
-
-const props = defineProps(['page'])
-const page = computed(() => props.page)
-
-const nextPage = ref(0)
-const router = useRouter()
+import VirtualScroller from '@/components/VirtualScroller.vue'
 
 // StoreToRefs for reactivity
 const store = useEventListStore();
+const { events, loading, hasMoreEvents } = storeToRefs(store)
 
-// Local refs instead of storeToRefs(store)
-const events = ref([])
-const loading = ref(false)
-
-//@Computed
-const hasNextPage = computed(() => {
-  // API Response
-  return nextPage.value !== null
+onMounted(() => {
+  // Reset store when component is first mounted
+  store.resetEvents()
+  store.fetchMoreEvents()
 })
-// WatchEffect to run on component mount
-watchEffect(() => {
-  if (store && props.page) {
-    loading.value = true
-    store.fetchEvents(5, props.page)
-      .then(() => {
-        events.value = store.events
-      })
-      .catch((error) => {
-        console.error('Error fetching events:', error)
-        router.push(( { name: 'network-error' } ))
-      })
+onActivated(() => {
+  if (events.value.length === 0) {
+    store.fetchMoreEvents()
   }
 })
+
+// Handle loading more events when scrolling
+function handleLoadMore() {
+  if (!loading.value && hasMoreEvents.value) {
+    store.fetchMoreEvents()
+  }
+}
 
 </script>
 
@@ -52,25 +41,26 @@ watchEffect(() => {
       </div>
       <div v-if="loading && !events.length" class="loading">Loading events...</div>
 
-      <template v-if="events && events.length">
-        <EventCard v-for="event in events" :key="event.id" :event="event" />
-      </template>
+      <VirtualScroller
+        :items="events"
+        :itemHeight="160"
+        :containerHeight="600"
+        :bufferSize="3"
+        @loadMore="handleLoadMore"
+      >
+        <template #item="{ item }">
+          <EventCard :event="item" />
+        </template>
+      </VirtualScroller>
 
-      <div class="pagination">
-        <router-link
-          id="page-prev"
-          v-if="page != 1"
-          :to="{ name: 'event-list', query: { page: page - 1 } }"
-          >&#60; Prev Page
-        </router-link>
-        {{ page }}
-        <router-link
-          id="page-next"
-          v-if="hasNextPage"
-          :to="{ name: 'event-list', query: { page: page + 1 } }"
-          >Next Page &#62;
-        </router-link>
+      <div v-if="loading && events.length > 0" class="loading-more">
+        Loading more events...
       </div>
+
+      <div v-if="!hasMoreEvents && events.length > 0" class="no-more-events">
+        No more events to load
+      </div>
+
     </div>
   </div>
 </template>
@@ -80,30 +70,18 @@ h1 {
   text-align: center;
 }
 
-.events {
-  width: 340px;
-  margin: 0 auto;
-  padding: 6px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.loading, .loading-more, .no-more-events {
+  text-align: center;
+  padding: 20px;
 }
 
-.pagination {
-  display: flex;
-  width: 300px;
+.loading-more {
+  margin-top: 10px;
+}
 
-  a {
-    flex: 1;
-    text-decoration: none;
-  }
-
-  #page-next {
-    text-align: right;
-  }
-
-  #page-prev {
-    text-align: left;
-  }
+.event-form {
+  width: 100%;
+  max-width: 340px;
+  margin: 0 auto 20px auto;
 }
 </style>
