@@ -13,6 +13,9 @@ export default {
   createEvent(eventData) {
     return apiClient.post('/events', eventData)
   },
+  updateEvent(id, eventData) {
+    return apiClient.put(`/events/${id}`, eventData)
+  },
   getEvents(limit = 2, offset = 0) {
     // Updated to use _per_page instead of _limit
     return apiClient.get(`/events?_limit=${limit}&_start=${offset}&_sort=-createdAt`)

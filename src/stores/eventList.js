@@ -14,18 +14,12 @@ export const useEventListStore = defineStore('events', {
     hasMoreEvents: true
   }),
 
-  actions: {
+  getters: {
     // getters
     addEvent(title) {
       const newEvent = { title, id: this.id++, completed: false }
 
       this.events = [newEvent, ...this.events]
-    },
-    toggleCompleted(id) {
-      const event = this.events.find((obj) => obj.id === id)
-      if (event) {
-        event.completed = !event.completed
-      }
     },
     // actions
     deleteEvent(itemId) {
@@ -33,7 +27,18 @@ export const useEventListStore = defineStore('events', {
         return object.id !== itemId
       })
     },
+  },
 
+  actions: {
+
+    async toggleCompleted(id) {
+      const event = this.events.find((obj) => obj.id === id)
+      if (event) {
+        const newStatus = !event.completed
+        await this.updateEvent(id, {completed: newStatus})
+        console.log('Toggle this', event)
+      }
+    },
     //////// API Actions /////////
     async fetchMoreEvents() {
       if (this.loading || !this.hasMoreEvents) return
@@ -124,5 +129,40 @@ export const useEventListStore = defineStore('events', {
         throw error
       }
     },
+
+    // Update some data
+    async updateEvent(eventId, updateEvent) {
+      // We need the id to proceed
+      if (!eventId) {
+        throw new Error("Sorry, no event found")
+      }
+      // Find the event in the current state
+      const eventIndex = this.events.findIndex(event => {
+        return event.id === eventId
+      })
+
+      // Make a copy of the event with changes applied
+      const updatedEvent = {
+        ...this.events[eventIndex],
+        ...updateEvent
+      }
+
+      this.events[eventIndex] = updatedEvent
+
+      try {
+        // Send the complete updated event to the server
+        const response = EventService.updateEvent(eventId, updatedEvent)
+        if (response.data && response) {
+          console.log('server response: ',  response, response.data)
+          this.events[eventIndex] = response.data
+        } else {
+          console.log('no data returned so we keep local data')
+        }
+        return this.events[eventIndex]
+      } catch (error) {
+        console.log('Error creating event:', error)
+        throw error
+      }
+    }
   },
 })

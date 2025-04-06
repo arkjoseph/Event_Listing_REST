@@ -12,11 +12,11 @@ defineProps({
 
 // // StoreToRefs for reactivity
 const store = useEventListStore();
-// const { events } = storeToRefs(store)
 const { toggleCompleted, deleteEvent } = store;
 </script>
 
 <template>
+
     <div class="event-card listings" :class="{ completed: event.completed }">
       <h2>
         <RouterLink :to="{ name: 'event-details', params: { id: event.id } }">
@@ -39,8 +39,8 @@ const { toggleCompleted, deleteEvent } = store;
   border: 1px solid #39495c;
   height: 100%; /* Fill the height given by VirtualScroller */
   box-sizing: border-box; /* Include padding in height calculation */
-  .card_buttons {
-
+  .card_buttons span {
+    cursor: pointer;
   }
   &.completed {
     background: blueviolet;
