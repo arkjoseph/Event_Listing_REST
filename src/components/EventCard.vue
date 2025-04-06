@@ -1,6 +1,6 @@
 <script setup>
 import { RouterLink } from 'vue-router'
-// import { storeToRefs } from 'pinia'
+import { inject } from 'vue'
 import { useEventListStore } from '@/stores/eventList.js'
 
 defineProps({
@@ -13,23 +13,22 @@ defineProps({
 // // StoreToRefs for reactivity
 const store = useEventListStore();
 const { toggleCompleted, deleteEvent } = store;
+
+
 </script>
 
 <template>
+  <div class="event-card listings" :class="{ completed: event.completed }">
+    <RouterLink :to="{ name: 'event-details', params: { id: event.id } }">
+      {{ event.title }}
+    </RouterLink>
 
-    <div class="event-card listings" :class="{ completed: event.completed }">
-      <h2>
-        <RouterLink :to="{ name: 'event-details', params: { id: event.id } }">
-          {{ event.title }}
-        </RouterLink>
-      </h2>
-
-      <p>@{{ event.time }} on {{ event.date }}</p>
-      <div class="card_buttons">
-        <span @click.stop="toggleCompleted(event.id)">&#10004;</span>
-        <span @click="deleteEvent(event.id)">&#10060;</span>
-      </div>
+    <p>@{{ event.time }} on {{ event.date }}</p>
+    <div class="card_buttons">
+      <span @click.stop="toggleCompleted(event.id)">&#10004;</span>
+      <span @click="deleteEvent(event.id)">&#10060;</span>
     </div>
+  </div>
 </template>
 
 <style>

@@ -24,5 +24,9 @@ export default {
   getEvent(id) {
     // ID for this call
     return apiClient.get(`/events/${id}`)
+  },
+  deleteEvent(id) {
+    // ID for this call
+    return apiClient.delete(`/events/${id}`)
   }
 }

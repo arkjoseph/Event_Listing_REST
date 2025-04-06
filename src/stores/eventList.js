@@ -15,21 +15,43 @@ export const useEventListStore = defineStore('events', {
   }),
 
   getters: {
-    // getters
     addEvent(title) {
       const newEvent = { title, id: this.id++, completed: false }
 
       this.events = [newEvent, ...this.events]
     },
-    // actions
-    deleteEvent(itemId) {
-      this.events = this.events.filter((object) => {
-        return object.id !== itemId
-      })
-    },
+
+
   },
 
   actions: {
+    //////// API Actions /////////
+    async deleteEvent(itemId) {
+      try {
+        // Optimistic Update to the local state
+        const deletedEvent = this.events.find((event) => {
+          event.id === itemId
+        })
+        this.events = this.events.filter((object) => {
+          return object.id !== itemId
+        })
+        await EventService.deleteEvent(itemId);
+
+        // Return success without updating local state
+        return {
+          success: true,
+          event: deletedEvent
+        }
+      } catch (error) {
+        console.error('Error Deleting:', error)
+        return {
+          success: false,
+          error: error.message || 'Failed to delete event'
+        }
+        // ToDo: fetch events again to restore state if delete fails
+        // ToDo: Error handling
+      }
+    },
 
     async toggleCompleted(id) {
       const event = this.events.find((obj) => obj.id === id)
@@ -39,7 +61,7 @@ export const useEventListStore = defineStore('events', {
         console.log('Toggle this', event)
       }
     },
-    //////// API Actions /////////
+
     async fetchMoreEvents() {
       if (this.loading || !this.hasMoreEvents) return
       this.loading = true
