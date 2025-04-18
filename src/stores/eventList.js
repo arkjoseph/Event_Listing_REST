@@ -53,6 +53,10 @@ export const useEventListStore = defineStore('events', {
       }
     },
 
+    async eventSelected() {
+      return true
+    },
+
     async toggleCompleted(id) {
       const event = this.events.find((obj) => obj.id === id)
       if (event) {

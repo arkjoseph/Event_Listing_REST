@@ -11,6 +11,7 @@ This app is written in vue.js and illustrates key learned skills utilizing ...
   * Flash message
   * Progress bar
 * Vue router ( options api )
+* Vuetify
 * Nested routes
 
 ## Customize configuration

@@ -1,6 +1,6 @@
 <script setup>
-import { ref } from 'vue'
-import { useEventListStore } from '@/stores/eventList.js'
+import {ref} from 'vue'
+import {useEventListStore} from '@/stores/eventList.js'
 
 // Field values
 const title = ref('')
@@ -13,7 +13,7 @@ const submitForm = async () => {
     return
   }
   try {
-    await store.createEvent({ title: title.value })
+    await store.createEvent({title: title.value})
     title.value = ''
   } catch (error) {
     console.error('Failed to submit:', error)
@@ -27,16 +27,19 @@ const clearForm = () => {
 </script>
 
 <template>
-  <form @submit.prevent="submitForm">
-    <textarea placeholder="Take a note..." v-model="title" type="text" />
-    <button class="button">Add</button>
-    <a @click="clearForm" class="clear button">cancel</a>
-  </form>
+  <v-card elevation="3" class="mb-6" cols="12">
+    <v-form @submit.prevent="submitForm">
+      <v-textarea label="Take a note" v-model="title" type="text"/>
+      <v-btn @click="submitForm" variant="elevated" class="button">Add</v-btn>
+      <v-btn variant="text" @click="clearForm" class="clear button">cancel</v-btn>
+    </v-form>
+  </v-card>
 </template>
 <style scoped>
 .button {
   cursor: pointer;
 }
+
 .clear {
   padding: 0 20px;
 }

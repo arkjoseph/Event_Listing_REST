@@ -34,7 +34,7 @@ function handleLoadMore() {
 
 <template>
   <div>
-    <h1>All the events for you</h1>
+    <h1>KeepIt Notes</h1>
     <div class="events">
       <div class="event-form">
         <EventForm></EventForm>
