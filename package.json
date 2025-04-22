@@ -12,6 +12,7 @@
     "rest": "json-server --watch events.json --port 3000"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-vue": "^7.3.0",
     "@mdi/font": "^7.4.47",
     "axios": "^1.8.4",
     "json-server": "^1.0.0-beta.3",

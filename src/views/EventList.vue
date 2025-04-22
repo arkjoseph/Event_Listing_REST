@@ -3,7 +3,6 @@ import { computed, onMounted, onActivated } from 'vue'
 import { storeToRefs } from 'pinia'
 
 import { useEventListStore } from '@/stores/eventList.js'
-
 import EventCard from '@/components/EventCard.vue'
 import EventForm from '@/components/EventForm.vue'
 import VirtualScroller from '@/components/VirtualScroller.vue'

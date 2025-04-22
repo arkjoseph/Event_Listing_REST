@@ -53,8 +53,18 @@ export const useEventListStore = defineStore('events', {
       }
     },
 
-    async eventSelected() {
-      return true
+    async saveTitle(id, newTitle) {
+      console.log('save title: ', newTitle)
+      const event = this.events.find((obj) => obj.id === id)
+      if (event) {
+        // We create the updated event object
+        const updatedEvent = { ...event, title: newTitle, updatedAt: new Date().toISOString() }
+        return await this.updateEvent(id, updatedEvent)
+      }
+      console.log('** close dialog')
+      // let dialog;
+      // dialog.value = false
+
     },
 
     async toggleCompleted(id) {
