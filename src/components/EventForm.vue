@@ -1,7 +1,7 @@
 <script setup>
 import {ref} from 'vue'
 import {useEventListStore} from '@/stores/eventList.js'
-import Ckeditor from '@/components/editor.vue'
+import CKEditor from '@/components/editor.vue'
 const props = defineProps({
   event: {
     type: Object,
@@ -60,13 +60,10 @@ const openEditDialog = () => {
   <v-dialog v-model="dialog" max-width="500px">
     <v-card>
       <v-card-title>Add notes</v-card-title>
-      <ckeditor :editor="editor" tag-name="textarea"/>
-      <v-textarea
-        v-model="title"
-        label="Add Note"
-        variant="outlined"></v-textarea>
+      <CKEditor v-model="title" tag-name="textarea"/>
       <v-card-actions>
         <v-btn @click="submitForm()">Save</v-btn>
+        <v-btn variant="text" @click="clearForm" class="clear button">cancel</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>

@@ -1,7 +1,7 @@
 <script setup>
 import { inject, ref } from 'vue'
 import { useEventListStore } from '@/stores/eventList.js'
-import ckeditor from '@/components/editor.vue'
+import CKEditor from '@/components/editor.vue'
 
 const props = defineProps({
   event: {
@@ -83,11 +83,11 @@ const deleteButton = async (eventId) => {
           <v-dialog v-model="dialog" max-width="500px">
             <v-card>
               <v-card-title>Edit</v-card-title>
-<!--                <ckeditor :editor="editor" tag-name="textarea"/>-->
-                <v-textarea
-                  v-model="title"
-                  label="Edit Note"
-                  variant="outlined"></v-textarea>
+                <CKEditor v-model="title" tag-name="textarea"/>
+<!--                <v-textarea-->
+<!--                  v-model="title"-->
+<!--                  label="Edit Note"-->
+<!--                  variant="outlined"></v-textarea>-->
               <v-card-actions>
                 <v-btn @click="handleUpdateTitle(event.id)">Save</v-btn>
               </v-card-actions>
